@@ -1,3 +1,5 @@
+//Feito por Giovanna
+
 package sjt.solar.a3;
 
 import java.io.Serializable;
@@ -8,7 +10,7 @@ public class Usuario implements Serializable {
     private String email;
     private String senha;
 
-    // Construtor completo
+    //Método construtore
     public Usuario(int id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;
@@ -16,7 +18,6 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    // Construtor mínimo (caso precise)
     public Usuario(int id) {
         this.id = id;
     }

@@ -1,3 +1,5 @@
+// Por Giovanna, Guilherme e Samuel
+
 package sjt.solar.a3;
 
 import java.awt.BorderLayout;
@@ -23,11 +25,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-public class TelaPrincipal extends JFrame {
+public final class TelaPrincipal extends JFrame {
 
     private final Usuario usuario;
-    private JTable tabelaEventos;
-    private DefaultTableModel modeloTabela;
+    private final JTable tabelaEventos; // Poem tudo final mesmo e boa noite ~ Samuel
+    private final DefaultTableModel modeloTabela;
 
     private static final Color FUNDO = new Color(32, 38, 46);
     private static final Color AMARELO_ESCURO = new Color(204, 168, 0);
@@ -54,10 +56,10 @@ public class TelaPrincipal extends JFrame {
         JLabel saudacao = new JLabel("Olá " + usuario.getNome() + "!");
         saudacao.setFont(new Font("Segoe UI", Font.BOLD, 18));
         saudacao.setForeground(Color.WHITE);
-// Gap à esquerda (por exemplo, 20px)
         saudacao.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         menuPanel.add(saudacao, BorderLayout.WEST);
-        // Botões à direita
+        
+        // Botões à direita (Se ele continuar bugando, vamo ver de tirar mesmo ~Samuel)
         JPanel botoesMenu = new JPanel();
         botoesMenu.setBackground(FUNDO);
         botoesMenu.setLayout(new BoxLayout(botoesMenu, BoxLayout.X_AXIS));
@@ -98,13 +100,13 @@ public class TelaPrincipal extends JFrame {
 
         painelPrincipal.add(menuPanel, BorderLayout.NORTH);
 
-        // Painel central com botões de ação e tabela
+        // Painel central
         JPanel centroPanel = new JPanel();
         centroPanel.setBackground(FUNDO);
         centroPanel.setLayout(new BorderLayout(0, 20));
         centroPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
 
-        // Painel de botões de ação
+        // Painel de botões de ação (Criar, Editar, Exibir) (Eu fiz sozinho, tá?! ~ Guilherme)
         JPanel botoesAcoes = new JPanel();
         botoesAcoes.setBackground(FUNDO);
         botoesAcoes.setLayout(new BoxLayout(botoesAcoes, BoxLayout.X_AXIS));
@@ -161,7 +163,7 @@ public class TelaPrincipal extends JFrame {
                 new Object[]{"Evento", "Descrição", "Data", "Horário", "Local"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                return false; // Isso é dos imports, pelo que entendi ~ Guilherme
             }
         };
 
@@ -171,16 +173,13 @@ public class TelaPrincipal extends JFrame {
         tabelaEventos.setBackground(Color.WHITE);
         tabelaEventos.setForeground(Color.BLACK);
 
-        // Cabeçalho customizado
         JTableHeader header = tabelaEventos.getTableHeader();
         header.setBackground(CINZA_CLARO);
         header.setForeground(Color.BLACK);
         header.setFont(new Font("Segoe UI", Font.BOLD, 15));
 
-        // Centraliza cabeçalho
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 
-        // Centraliza colunas
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < tabelaEventos.getColumnCount(); i++) {
@@ -196,13 +195,14 @@ public class TelaPrincipal extends JFrame {
 
         setContentPane(painelPrincipal);
 
-        carregarEventos();
+        carregarEventos(); // Ele sugeiriu tornar a classe toda "final", ent eu fiz ~ Guilherme
     }
 
-    // Torne público para ser chamado por CriarEvento
+    // Tornei público para ser chamado por CriarEvento ~ Guilherme
+    // Tive que mudar o comando do SQL, pq tava faltando o FROM ali ~ Giovanna
     public void carregarEventos() {
         modeloTabela.setRowCount(0);
-        try (Connection conn = new sjt.solar.a3.Conexao().getConnection()) {
+        try (Connection conn = sjt.solar.a3.Conexao.getConnection()) {
             String sql = "SELECT nomeEvento, descricao, data, horario, local FROM eventos WHERE idUsuario = ? ORDER BY id DESC LIMIT 20";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setInt(1, usuario.getId());
@@ -218,14 +218,14 @@ public class TelaPrincipal extends JFrame {
                         descricao = "";
                     }
 
-                    // Formatação da data para dd/MM/yyyy
+                    // Aqui vai mudar a data para"dd/MM/yyyy" ~ Giovanna
                     String data = "";
                     java.sql.Date dataSql = rs.getDate("data");
                     if (dataSql != null) {
                         data = new SimpleDateFormat("dd/MM/yyyy").format(dataSql);
                     }
 
-                    // Formatação do horário para HH:mm
+                    // Assim vai por o horário assim:  HH:mm ~ Samuel
                     String horario = "";
                     java.sql.Time horarioSql = rs.getTime("horario");
                     if (horarioSql != null) {
@@ -242,7 +242,7 @@ public class TelaPrincipal extends JFrame {
         }
     }
 
-    public static void abrirTela(Usuario usuario) {
+    public static void abrirTela(Usuario usuario) { // Se essa bosta der erro, é só tirar o static ~ Guilherme
         TelaPrincipal tela = new TelaPrincipal(usuario);
         tela.setVisible(true);
     }

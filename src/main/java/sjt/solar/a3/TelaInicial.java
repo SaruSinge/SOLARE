@@ -1,3 +1,5 @@
+// Feita por Giovanna
+
 package sjt.solar.a3;
 
 import java.awt.Color;
@@ -18,16 +20,14 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
 
-    // Cores padrão do sistema
     private static final Color FUNDO = new Color(32, 38, 46);
     private static final Color AMARELO_ESCURO = new Color(204, 168, 0);
     private static final Color FONTE = Color.WHITE;
 
-    public TelaInicial() {
+    public TelaInicial() { //Depois só me explica o que é esse coiso aq ~ Giovanna
         initComponents();
     }
-
-    @SuppressWarnings("unchecked")
+    // Tirei daqui aquele negócio que veio do NetBeans ~ Samuel
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -39,13 +39,10 @@ public class TelaInicial extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("TelaInicial");
 
-        // Fundo escuro
         JPanel painelCentral = new JPanel();
         painelCentral.setBackground(FUNDO);
         painelCentral.setLayout(new BoxLayout(painelCentral, BoxLayout.Y_AXIS));
-        painelCentral.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40)); // margem interna
-
-        // Espaço para centralizar verticalmente
+        painelCentral.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
         painelCentral.add(Box.createVerticalGlue());
 
         // Título
@@ -54,7 +51,7 @@ public class TelaInicial extends javax.swing.JFrame {
         jLabel1.setAlignmentX(Component.CENTER_ALIGNMENT);
         jLabel1.setText("BEM VINDO AO ORGANIZADOR SOLARE");
 
-        // Mensagem maior
+        // Mensagem embaixo lá
         jLabel2.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 20));
         jLabel2.setForeground(FONTE);
         jLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -65,7 +62,7 @@ public class TelaInicial extends javax.swing.JFrame {
         jLabel3.setAlignmentX(Component.CENTER_ALIGNMENT);
         jLabel3.setText("para se organizar melhor!");
 
-        // Botão Entrar
+        // Botão Entrar (Vou deixa tudo nesse formato, e ce sabe que foi eu, blz? ~ Samuel)
         jToggleButton1.setBackground(AMARELO_ESCURO);
         jToggleButton1.setForeground(FONTE);
         jToggleButton1.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
@@ -96,8 +93,6 @@ public class TelaInicial extends javax.swing.JFrame {
         painelCentral.add(jToggleButton1);
         painelCentral.add(Box.createVerticalStrut(18));
         painelCentral.add(jToggleButton2);
-
-        // Espaço para centralizar verticalmente
         painelCentral.add(Box.createVerticalGlue());
 
         setContentPane(painelCentral);
@@ -105,13 +100,13 @@ public class TelaInicial extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) { // Deixa esse "evt" aí, que é o evento do botão, pq ele ferra todo o código se tirar ~ Giovanna
         try {
             TelaLogin telaLogin = new TelaLogin();
             telaLogin.setVisible(true);
             this.dispose();
         } catch (Exception e) {
-            e.printStackTrace();
+            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, e); // Ele pediu p mudar isso, mas não sei se tá certo... pelo menos tá funfando ~ Samuel
         }
     }
 
@@ -121,6 +116,7 @@ public class TelaInicial extends javax.swing.JFrame {
         this.dispose();
     }
 
+    // Mas esse deixa, tira? Faz oq? ~ Gi
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -129,14 +125,8 @@ public class TelaInicial extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex); // Mudei que nem o outro, pq tava me irritando com esse erro ~ Samuel
         }
 
         java.awt.EventQueue.invokeLater(() -> new TelaInicial().setVisible(true));

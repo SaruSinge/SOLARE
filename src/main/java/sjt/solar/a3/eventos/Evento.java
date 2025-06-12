@@ -1,7 +1,9 @@
+// Feito por Guilherme e Samuel
+
 package sjt.solar.a3.eventos;
 
-public class Evento {
-    private int idEvento; // Adicionando um ID para identificar o evento
+public class Evento { //Essa é a classe pai pras outras classes de eventos, como EventoLista, EventoLembrete, etc ~ Samuel
+    private int idEvento; // Adicionando um ID para identificar o evento, senção o banco de dados não vai saber qual evento é qual ~ Samuel
     private String nomeEvento;
     private String nomeLista;
     private String descricao;
@@ -84,7 +86,7 @@ public class Evento {
         this.hora = hora;
     }
 
-    public void setLocal(String local) {
+    public void setLocal(String local) { // tinha que ser burro mesmo p esquecer o setter ~ Samuel
         this.local = local;
     }
 }

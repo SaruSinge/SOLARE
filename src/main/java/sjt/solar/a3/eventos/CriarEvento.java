@@ -1,5 +1,8 @@
+//Feito por Samuel e Guilherme
+
 package sjt.solar.a3.eventos;
 
+// É bastante biblioteca, mas é necessário para criar a tela de eventos :<
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -33,12 +36,7 @@ import sjt.solar.a3.Usuario;
 
 public class CriarEvento extends JFrame {
 
-    private Usuario usuario;
-    private TelaPrincipal telaPrincipal;
-
     public CriarEvento(Usuario usuario, TelaPrincipal telaPrincipal) {
-        this.usuario = usuario;
-        this.telaPrincipal = telaPrincipal;
         setTitle("Crie seu Evento");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 600);
@@ -279,7 +277,6 @@ public class CriarEvento extends JFrame {
                     try {
                         int dia = Integer.parseInt(partes[0]);
                         int mes = Integer.parseInt(partes[1]);
-                        int ano = Integer.parseInt(partes[2]);
                         if (dia < 1 || dia > 31) {
                             JOptionPane.showMessageDialog(this, "Dia inválido! Use um valor entre 1 e 31.");
                             return;
@@ -325,8 +322,8 @@ public class CriarEvento extends JFrame {
                 }
             }
 
-            // Insere no banco de dados
-            try (Connection conn = new sjt.solar.a3.Conexao().getConnection()) {
+            // Aqui vai inserir o evento no banco de dados ~ Guilherme
+            try (Connection conn = sjt.solar.a3.Conexao.getConnection()) {
                 String sql = "INSERT INTO eventos (nomeEvento, nomeLista, descricao, data, horario, local, idUsuario) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                     stmt.setString(1, nome);
@@ -359,6 +356,8 @@ public class CriarEvento extends JFrame {
         setContentPane(mainPanel);
     }
 
+
+    // Método main para testar a tela de criação de eventos - Copilot feito por mim ~ Guilherme
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JOptionPane.showMessageDialog(null, "Abra esta tela passando um objeto Usuario válido!");

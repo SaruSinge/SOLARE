@@ -1,3 +1,5 @@
+// Feito por GUilherme e Samuel
+
 package sjt.solar.a3.eventos;
 
 import java.awt.Color;
@@ -14,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -34,30 +35,28 @@ import sjt.solar.a3.Usuario;
 
 public class ExibirEventos extends JFrame {
 
-    private Usuario usuario;
-    private JPanel mainPanel;
-    private JPanel eventosPanel;
+    private final JPanel mainPanel; // mudei pra final, pq tava pedindo ~ Samuel
+    private final JPanel eventosPanel; // mudei pra final, pq tava pedindo ~ Samuel
     private List<Evento> eventosOriginais = new ArrayList<>();
-    private boolean voltando = false; // Flag para evitar abrir TelaPrincipal duas vezes
+    private boolean voltando = false; // O mesmo que o outro lá no dados cadastro ~ Guilherme
 
-    // Cores iguais à tela EditandoEvento
+    // Da pro gasto ~ Samuel
     private static final Color FUNDO = new Color(32, 38, 46);
     private static final Color FONTE = Color.WHITE;
     private static final Color AMARELO_ESCURO = new Color(204, 168, 0);
     private static final Color CINZA_ESCURO = new Color(44, 51, 61);
 
-    public static void abrirTela(Usuario usuario) {
+    public static void abrirTela(Usuario usuario) { // Vo deixar aq e não mexa ~ Guilherme
         new ExibirEventos(usuario).setVisible(true);
     }
 
     public ExibirEventos(Usuario usuario) {
-        this.usuario = usuario;
         setTitle("Meus Eventos");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(700, 600);
         setLocationRelativeTo(null);
 
-        // Ao fechar a janela pelo X, volta para TelaPrincipal (mas só se não já estiver voltando)
+        // Fechando pelo X, volta pra TelaPrincipal (Foi o que eu entendi) ~ Guilherme
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
@@ -66,12 +65,12 @@ public class ExibirEventos extends JFrame {
                 }
             }
         });
+        // Não mexe em time que tá ganhando kakakkakakak ~ Samuel
 
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBackground(FUNDO);
 
-        // Painel centralizador
         JPanel painelCentro = new JPanel();
         painelCentro.setLayout(new BoxLayout(painelCentro, BoxLayout.Y_AXIS));
         painelCentro.setBackground(FUNDO);
@@ -99,7 +98,8 @@ public class ExibirEventos extends JFrame {
         painelCentro.add(btnVoltar);
         painelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        // Painel dos botões de ordenação centralizados
+
+        // Painel dos botões de ordenação lá de cima ~ Samuel
         JPanel botoesPanel = new JPanel();
         botoesPanel.setLayout(new BoxLayout(botoesPanel, BoxLayout.X_AXIS));
         botoesPanel.setBackground(FUNDO);
@@ -121,7 +121,7 @@ public class ExibirEventos extends JFrame {
             btn.setMinimumSize(botaoDim);
         }
 
-        // Não altere a flag voltando nos botões de ordenação
+        // Não altere nada aq sem me falar. Eu mal dormi por causa dessa birósca ~ Samuel
         btnOrdemNome.addActionListener(e -> {
             List<Evento> ordenados = new ArrayList<>(eventosOriginais);
             ordenados.sort(Comparator.comparing(ev -> ev.nomeEvento != null ? ev.nomeEvento.toLowerCase() : ""));
@@ -159,7 +159,6 @@ public class ExibirEventos extends JFrame {
         scrollPane.getViewport().setBackground(FUNDO);
         scrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // Painel para alinhar eventos à esquerda, mas manter botões centralizados
         JPanel painelEventosAlinhado = new JPanel();
         painelEventosAlinhado.setLayout(new BoxLayout(painelEventosAlinhado, BoxLayout.X_AXIS));
         painelEventosAlinhado.setBackground(FUNDO);
@@ -170,15 +169,14 @@ public class ExibirEventos extends JFrame {
 
         mainPanel.add(painelCentro);
 
-        // Carrega eventos do banco
         eventosOriginais = buscarEventosDoUsuario(usuario.getId());
 
-        // Exibe inicialmente por ordem de inserção (como vieram do banco)
         exibirEventos(eventosOriginais);
 
         setContentPane(mainPanel);
     }
 
+    // Método pra exibir os eventos no painel que tá configurado ~ Guilherme
     private void exibirEventos(List<Evento> eventos) {
         eventosPanel.removeAll();
 
@@ -231,7 +229,7 @@ public class ExibirEventos extends JFrame {
                 painelEvento.add(lblInfo);
 
                 eventosPanel.add(painelEvento);
-                eventosPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Gap de 10px
+                eventosPanel.add(Box.createRigidArea(new Dimension(0, 10))); 
             }
         }
 
@@ -241,8 +239,7 @@ public class ExibirEventos extends JFrame {
 
     private List<Evento> buscarEventosDoUsuario(int idUsuario) {
         List<Evento> eventos = new ArrayList<>();
-        try (Connection conn = new Conexao().getConnection()) {
-            // Ordena por dataAlteracao DESC, depois dataCriacao DESC (mais recente primeiro)
+        try (Connection conn = Conexao.getConnection()) {
             String sql = "SELECT nomeEvento, nomeLista, descricao, data, horario, local "
                     + "FROM eventos WHERE idUsuario = ? "
                     + "ORDER BY COALESCE(dataAlteracao, dataCriacao, NOW()) DESC";
@@ -272,50 +269,7 @@ public class ExibirEventos extends JFrame {
         return eventos;
     }
 
-    // Utilitário para comparar datas no formato dd/MM/yyyy
-    private int compararDatas(String dataA, String dataB) {
-        if (dataA == null && dataB == null) {
-            return 0;
-        }
-        if (dataA == null) {
-            return -1;
-        }
-        if (dataB == null) {
-            return 1;
-        }
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date dA = sdf.parse(dataA);
-            Date dB = sdf.parse(dataB);
-            return dA.compareTo(dB);
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-    // Utilitário para comparar horários no formato HH:mm
-    private int compararHorarios(String horaA, String horaB) {
-        if (horaA == null && horaB == null) {
-            return 0;
-        }
-        if (horaA == null) {
-            return -1;
-        }
-        if (horaB == null) {
-            return 1;
-        }
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            Date hA = sdf.parse(horaA);
-            Date hB = sdf.parse(horaB);
-            return hA.compareTo(hB);
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-    // Classe interna para representar um evento
-    private static class Evento {
+    private static class Evento { // Não mexe, por favor, confia em mim~ Samuel
 
         String nomeEvento;
         String nomeLista;

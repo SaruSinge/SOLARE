@@ -1,3 +1,5 @@
+// Feito por Guilherme, Samuel e Giovanna
+
 package sjt.solar.a3.eventos;
 
 import java.awt.BorderLayout;
@@ -33,11 +35,12 @@ import sjt.solar.a3.Conexao;
 import sjt.solar.a3.TelaPrincipal;
 import sjt.solar.a3.Usuario;
 
-public class EditarEvento extends JFrame {
+public class EditarEvento extends JFrame { // ~ Guilherme
 
-    private Usuario usuario;
+    private final Usuario usuario; // Mudei para final ~ Samuel
     private boolean reabrindo = false;
 
+    // ~ Samuel <3
     private static final Color FUNDO = new Color(32, 38, 46);
     private static final Color AMARELO_ESCURO = new Color(204, 168, 0);
     private static final Color FONTE = Color.WHITE;
@@ -45,9 +48,9 @@ public class EditarEvento extends JFrame {
     private static final Color CINZA_ESCURO = new Color(44, 51, 61);
 
     private java.util.List<Evento> eventosOriginais = new ArrayList<>();
-    private JPanel eventosPanel;
+    private final JPanel eventosPanel; // Mudei para final ~ Samuel
     private JTextField campoBusca;
-    private JLabel lblNenhumResultado;
+    private final JLabel lblNenhumResultado; // Mudei para final ~ Samuel
 
     public static void abrirTela(Usuario usuario) {
         new EditarEvento(usuario).setVisible(true);
@@ -69,7 +72,7 @@ public class EditarEvento extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                if (!reabrindo) {
+                if (!reabrindo) { // Faltou o ! o anta ~ Guilherme
                     new TelaPrincipal(usuario).setVisible(true);
                 }
             }
@@ -86,13 +89,11 @@ public class EditarEvento extends JFrame {
         buscaPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         buscaPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
 
-        // Frase alinhada à esquerda do campo de busca
         JLabel lblBusca = new JLabel("Digite o nome do evento que deseja editar:");
         lblBusca.setForeground(FONTE);
         lblBusca.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         lblBusca.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // Campo de busca igual ao campo "nome" de CriarEvento
         campoBusca = new JTextField();
         campoBusca.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         campoBusca.setBackground(CINZA_CLARO);
@@ -104,7 +105,6 @@ public class EditarEvento extends JFrame {
         campoBusca.setMaximumSize(new Dimension(320, 36));
         campoBusca.setMinimumSize(new Dimension(320, 36));
 
-        // Botão "Apagar pesquisa" menor
         JButton btnApagarPesquisa = new JButton("Apagar pesquisa");
         btnApagarPesquisa.setBackground(CINZA_ESCURO);
         btnApagarPesquisa.setForeground(Color.WHITE);
@@ -119,21 +119,20 @@ public class EditarEvento extends JFrame {
             filtrarEventos();
         });
 
-        // Painel horizontal para botão apagar pesquisa
         JPanel painelBtnApagar = new JPanel();
         painelBtnApagar.setLayout(new BoxLayout(painelBtnApagar, BoxLayout.X_AXIS));
         painelBtnApagar.setOpaque(false);
         painelBtnApagar.setAlignmentX(Component.LEFT_ALIGNMENT);
         painelBtnApagar.add(btnApagarPesquisa);
 
-        lblNenhumResultado = new JLabel("Nenhum resultado encontrado");
+        lblNenhumResultado = new JLabel("Nenhum resultado encontrado"); // Parece um analfabéto ~ Guilherme
         lblNenhumResultado.setForeground(FONTE);
         lblNenhumResultado.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblNenhumResultado.setAlignmentX(Component.LEFT_ALIGNMENT);
         lblNenhumResultado.setVisible(false);
 
         buscaPanel.add(lblBusca);
-        buscaPanel.add(Box.createRigidArea(new Dimension(0, 4))); // gap de 4px
+        buscaPanel.add(Box.createRigidArea(new Dimension(0, 4))); 
         buscaPanel.add(campoBusca);
         buscaPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         buscaPanel.add(painelBtnApagar);
@@ -154,7 +153,7 @@ public class EditarEvento extends JFrame {
 
         mainPanel.add(scrollPane);
 
-        // Botão "Voltar" centralizado no fim da página
+        // Botão "Voltar" ~ Guilherme
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.setBackground(CINZA_ESCURO);
         btnVoltar.setForeground(Color.WHITE);
@@ -164,7 +163,6 @@ public class EditarEvento extends JFrame {
         btnVoltar.setMaximumSize(new Dimension(140, 32));
         btnVoltar.setMinimumSize(new Dimension(140, 32));
 
-        // Painel para centralizar o botão Voltar
         JPanel painelVoltar = new JPanel();
         painelVoltar.setLayout(new BoxLayout(painelVoltar, BoxLayout.X_AXIS));
         painelVoltar.setOpaque(false);
@@ -191,7 +189,7 @@ public class EditarEvento extends JFrame {
         campoBusca.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                filtrarEventos();
+                filtrarEventos(); //Depois temos que rever o filtrarEventos e pq não tá funcionando direito aqui, pq a classe tá certa ~ Guilherme
             }
         });
     }
@@ -220,6 +218,7 @@ public class EditarEvento extends JFrame {
         }
     }
 
+    // Método para exibir os eventos na tela ~ Guilherme
     private void exibirEventos(java.util.List<Evento> eventos) {
         eventosPanel.removeAll();
 
@@ -306,9 +305,9 @@ public class EditarEvento extends JFrame {
         eventosPanel.repaint();
     }
 
-    private java.util.List<Evento> buscarEventosDoUsuario(int idUsuario) {
+    private java.util.List<Evento> buscarEventosDoUsuario(int idUsuario) { // Essa joça tá funcianado as vezes, e as vez não :> ~ Samuel
         java.util.List<Evento> eventos = new ArrayList<>();
-        try (Connection conn = new Conexao().getConnection()) {
+        try (Connection conn = Conexao.getConnection()) {
             String sql = "SELECT id, nomeEvento FROM eventos WHERE idUsuario = ? ORDER BY id DESC";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setInt(1, idUsuario);
@@ -324,7 +323,11 @@ public class EditarEvento extends JFrame {
     }
 
     private void apagarEvento(int idEvento) {
-        try (Connection conn = new Conexao().getConnection()) {
+        try (Connection conn = Conexao.getConnection()) { // mudei para Conexao pra parar de dar esse errinho ~ Samuel
+            if (conn == null) {
+                JOptionPane.showMessageDialog(this, "Erro ao conectar ao banco de dados.");
+                return;
+            }
             String sql = "DELETE FROM eventos WHERE id = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setInt(1, idEvento);
@@ -335,7 +338,7 @@ public class EditarEvento extends JFrame {
         }
     }
 
-    private static class Evento {
+    private static class Evento { // Deixa ele aqui mesmo, dane-se ~ Samuel
         int id;
         String nomeEvento;
 

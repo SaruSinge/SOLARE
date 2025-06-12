@@ -1,3 +1,5 @@
+// Feito por Giovanna
+
 package sjt.solar.a3;
 
 import java.sql.Connection;

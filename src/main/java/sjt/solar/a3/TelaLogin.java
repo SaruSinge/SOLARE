@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -21,8 +19,8 @@ import javax.swing.SwingUtilities;
 
 public class TelaLogin extends JFrame {
 
-    private JTextField txtEmail;
-    private JPasswordField txtSenha;
+    private final JTextField txtEmail; // Mudei pra final tá? ~Giovanna
+    private final JPasswordField txtSenha;
 
     public TelaLogin() {
         setTitle("Login");
@@ -75,18 +73,11 @@ public class TelaLogin extends JFrame {
         btnEntrar.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btnEntrar.setFocusPainted(false);
         btnEntrar.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-// Adicione estas linhas:
         btnEntrar.setPreferredSize(new Dimension(180, 45));
         btnEntrar.setMaximumSize(new Dimension(180, 45));
         btnEntrar.setMinimumSize(new Dimension(180, 45));
 
-        btnEntrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                realizarLogin();
-            }
-        });
+        btnEntrar.addActionListener(e -> realizarLogin()); // Gi, aqui eu mudei pra o que o corretor tava falando ~Sa
 
         painel.add(btnEntrar);
 
@@ -129,11 +120,11 @@ public class TelaLogin extends JFrame {
                 JOptionPane.showMessageDialog(this, "Email ou senha incorretos!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao realizar login: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao realizar login: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE); // Realmente ficou melhor assim ~Samuel
         }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new TelaLogin().setVisible(true));
-    }
+    } // Depois eu tiro ~ Gi
 }

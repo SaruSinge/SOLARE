@@ -1,3 +1,5 @@
+// Feito por Guilherme e Samuel
+
 package sjt.solar.a3.eventos;
 
 import java.awt.Color;
@@ -32,9 +34,8 @@ public class EditandoEvento extends JFrame {
 
     private Usuario usuario;
     private int eventoId;
-    private EditarEvento telaEditarEvento;
 
-    // Referências diretas aos campos
+    // Esse aqui são dos campos para informar os dados do evento ~ Guilherme
     private JTextField txtNome;
     private JTextField txtLista;
     private JTextArea txtDescricao;
@@ -42,29 +43,28 @@ public class EditandoEvento extends JFrame {
     private JFormattedTextField txtHorario;
     private JTextField txtLocal;
 
-    // Método para ser chamado por outras classes
+    // Método para ser chamado por outras classes ~ Guilherme
     public static void abrirTela(Usuario usuario, int eventoId, EditarEvento telaEditarEvento) {
         new EditandoEvento(usuario, eventoId, telaEditarEvento).setVisible(true);
-    }
+    } // ele tem que receber o usuário, o ID do evento e a tela de edição para atualizar a lista de eventos depois de editar
 
     public EditandoEvento(Usuario usuario, int eventoId, EditarEvento telaEditarEvento) {
         this.usuario = usuario;
         this.eventoId = eventoId;
-        this.telaEditarEvento = telaEditarEvento;
-
         setTitle("Editar Evento");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 700);
         setLocationRelativeTo(null);
 
-        // Cores
+        // Cores do layout ~ Samuel
         Color fundo = new Color(32, 38, 46);
         Color campo = new Color(44, 51, 61);
         Color fonte = Color.WHITE;
-        Color amarelo = new Color(255, 255, 102);
         Color cinzaEscuro = new Color(44, 51, 61);
 
-        // Painel principal
+        // Painel principal ~ GUilherme
+        // Eu mudei o layout para "GridBagLayout" para ficar mais flexível e bonito ~ samuel
+
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(fundo);
 
@@ -88,7 +88,7 @@ public class EditandoEvento extends JFrame {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridwidth = 1;
 
-        // Campos do evento
+        // Campos do evento ~ Guilherme ~ Samuel
         JLabel lblNome = new JLabel("Nome do Evento:");
         lblNome.setForeground(fonte);
         lblNome.setFont(new Font("Segoe UI", Font.PLAIN, 18));
@@ -205,7 +205,7 @@ public class EditandoEvento extends JFrame {
         gbc.gridwidth = 3;
         mainPanel.add(txtLocal, gbc);
 
-        // Painel de botões no fim da página
+        // Painel de botões no fim da página ~Samuel
         JPanel painelBotoes = new JPanel();
         painelBotoes.setBackground(fundo);
         painelBotoes.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 10));
@@ -234,7 +234,7 @@ public class EditandoEvento extends JFrame {
         // Carrega os dados do evento selecionado
         carregarDadosEvento();
 
-        // Ação do botão Voltar
+        // Botão Voltar
         btnVoltar.addActionListener((ActionEvent e) -> {
             this.dispose();
             if (telaEditarEvento != null) {
@@ -242,7 +242,7 @@ public class EditandoEvento extends JFrame {
             }
         });
 
-        // Ação do botão Salvar Modificação
+        // Acionamento do botão Salvar Modificação ~ Guilherme
         btnSalvar.addActionListener((ActionEvent e) -> {
             String nome = txtNome.getText().trim();
             String lista = txtLista.getText().trim();
@@ -267,7 +267,7 @@ public class EditandoEvento extends JFrame {
                 }
             }
 
-            try (Connection conn = new Conexao().getConnection()) {
+            try (Connection conn = Conexao.getConnection()) {
                 String sql = "UPDATE eventos SET nomeEvento=?, nomeLista=?, descricao=?, data=?, horario=?, local=? WHERE id=? AND idUsuario=?";
                 try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                     stmt.setString(1, nome);
@@ -300,9 +300,10 @@ public class EditandoEvento extends JFrame {
         setContentPane(mainPanel);
     }
 
-    // Carrega os dados do evento selecionado nos campos
+    // Carrega os dados do evento selecionado nos campos ~ Guilherme 
+    // Ageitei o erro do SQL, era eventos, não evento ~ Samuel
     private void carregarDadosEvento() {
-        try (Connection conn = new Conexao().getConnection()) {
+        try (Connection conn = Conexao.getConnection()) {
             String sql = "SELECT * FROM eventos WHERE id = ? AND idUsuario = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setInt(1, eventoId);

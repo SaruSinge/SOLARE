@@ -1,3 +1,5 @@
+//Feito por Guilher e Samuel
+
 package sjt.solar.a3.eventos;
 
 import java.sql.Connection;
@@ -14,10 +16,10 @@ public class EventoDAO {
             throw new Exception("Nome do Evento e Lista que Pertence são obrigatórios.");
         }
 
-        Connection conn = null;
+        Connection conn = null; // Realmente é necessário ~ Guilherme
         PreparedStatement stmt = null;
 
-        try {
+        try { //NÃO MEXA AQUI!!!   ELE VAI PEDIR P CORRIGIR MAS NÃO TOQUE!!! ~ Guilherme
             conn = ConexaoEventos.getConnection();
             String sql = "INSERT INTO evento (nomeEvento, nomeLista, descricao, data, hora, local) VALUES (?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
@@ -34,7 +36,7 @@ public class EventoDAO {
         }
     }
 
-    // Listar todos os eventos
+    // metodo para listar eventos
     public List<Evento> listarEventos() throws Exception {
         List<Evento> eventos = new ArrayList<>();
         Connection conn = null;
@@ -42,12 +44,12 @@ public class EventoDAO {
         ResultSet rs = null;
         try {
             conn = ConexaoEventos.getConnection();
-            String sql = "SELECT * FROM evento";
+            String sql = "SELECT * FROM evento"; //Burro, burro, burro! ~Samuel
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Evento evento = new Evento(
-                    rs.getInt("idEvento"), // Supondo que Evento tem um ID
+                    rs.getInt("idEvento"), 
                     rs.getString("nomeEvento"),
                     rs.getString("nomeLista"),
                     rs.getString("descricao"),
@@ -65,7 +67,7 @@ public class EventoDAO {
         return eventos;
     }
 
-    // Editar um evento
+    // Pra editar eventos
     public void editarEvento(Evento evento) throws Exception {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -86,7 +88,7 @@ public class EventoDAO {
         }
     }
 
-    // Deletar um evento
+    // Pra deletar um evento
     public void deletarEvento(int idEvento) throws Exception {
         Connection conn = null;
         PreparedStatement stmt = null;

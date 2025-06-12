@@ -1,56 +1,49 @@
+// Feita Por Giovanna e Samuel
+
 package sjt.solar.a3;
 
 public class TelaCadastro extends javax.swing.JFrame {
 
-    public TelaCadastro() {
+    public TelaCadastro() { // Depois só revisa pra ver se tá certin ~ Gi
         initComponents();
-        setLocationRelativeTo(null); // Centraliza a janela na tela
+        setLocationRelativeTo(null); 
 
         // Botão Voltar ao Início
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                voltarAoInicio();
-            }
-        });
+        jButton1.addActionListener(evt -> voltarAoInicio());
 
         // Botão Cadastrar!
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                String nome = jTextField1.getText();
-                String email = jTextField2.getText();
-                String senha = jTextField3.getText();
+        jButton2.addActionListener(evt -> {
+            String nome = jTextField1.getText();
+            String email = jTextField2.getText();
+            String senha = jTextField3.getText();
 
-                // Validação simples
-                if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
-                    javax.swing.JOptionPane.showMessageDialog(TelaCadastro.this, "Preencha todos os campos!", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+            // Validação simples
+            if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(TelaCadastro.this, "Preencha todos os campos!", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-                try {
-                    Usuario usuario = new Usuario(0, nome, email, senha);
-                    UsuarioDAO usuarioDAO = new UsuarioDAO(new Conexao());
-                    Usuario usuarioCadastrado = usuarioDAO.cadastrarUsuario(usuario); // Retorna o usuário com id preenchido
+            try {
+                Usuario usuario = new Usuario(0, nome, email, senha);
+                UsuarioDAO usuarioDAO = new UsuarioDAO(new Conexao());
+                Usuario usuarioCadastrado = usuarioDAO.cadastrarUsuario(usuario); // Retorna o usuário com id dele, pra poder usar nos "eventos" e tals ~Samuel
 
-                    // Cadastro realizado com sucesso, abre a tela principal com o usuário correto
-                    new TelaPrincipal(usuarioCadastrado).setVisible(true);
-                    TelaCadastro.this.dispose();
-                } catch (Exception ex) {
-                    javax.swing.JOptionPane.showMessageDialog(TelaCadastro.this, ex.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-                }
+                new TelaPrincipal(usuarioCadastrado).setVisible(true);
+                TelaCadastro.this.dispose();
+            } catch (Exception ex) {
+                javax.swing.JOptionPane.showMessageDialog(TelaCadastro.this, ex.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
         });
     }
 
-    // Método para voltar à tela inicial
+    // Método para voltar pra tela inicial ~ Giovanna
     private void voltarAoInicio() {
         TelaInicial telaInicial = new TelaInicial();
         telaInicial.setVisible(true);
         this.dispose();
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
-    private void initComponents() {
+    private void initComponents() { // Esse é o négocio que o Copilot falou pra mim, mas não entendi muito bem como funciona, mas é o que cria os componentes da tela ~ Gi
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -67,7 +60,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         jButton1.setText("Voltar ao Início");
 
         jButton2.setBackground(new java.awt.Color(255, 255, 102));
-        jButton2.setText("Cadastrar!");
+        jButton2.setText("Cadastrar!"); //Mudei os nomes aq,tá? ~ Samuel
 
         jLabel1.setText("Seu nome");
 
@@ -120,7 +113,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>
+    }
 
     public static void main(String args[]) {
         try {
@@ -130,24 +123,17 @@ public class TelaCadastro extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TelaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaCadastro().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new TelaCadastro().setVisible(true);
         });
     }
 
-    // Variables declaration - do not modify
+    //Deixa isso aqui migo, pq  tá dando erro pra colar lá encima ~ Giovanna
+    // Blz ~ Samuel akakakkakakak
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -156,5 +142,4 @@ public class TelaCadastro extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    // End of variables declaration
 }
