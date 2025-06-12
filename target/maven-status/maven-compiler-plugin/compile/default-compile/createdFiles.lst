@@ -1,6 +1,5 @@
 sjt\solar\a3\TelaInicial.class
 sjt\solar\a3\TelaCadastro.class
-sjt\solar\a3\TelaCadastro$2.class
 sjt\solar\a3\eventos\Evento.class
 sjt\solar\a3\eventos\ConexaoEventos.class
 sjt\solar\a3\eventos\ExibirEventos.class
@@ -13,16 +12,12 @@ sjt\solar\a3\eventos\Estilo.class
 sjt\solar\a3\TelaLogin.class
 sjt\solar\a3\Conexao.class
 sjt\solar\a3\eventos\EditarEvento$Evento.class
-sjt\solar\a3\TelaCadastro$1.class
-sjt\solar\a3\TelaLogin$1.class
 sjt\solar\a3\eventos\ExibirEventos$1.class
 sjt\solar\a3\eventos\EventoDAO.class
 sjt\solar\a3\Usuario.class
 sjt\solar\a3\UsuarioDAO.class
 sjt\solar\a3\TelaPrincipal.class
 sjt\solar\a3\eventos\DadosCadastrais$1.class
-sjt\solar\a3\eventos\Estilo$1.class
-sjt\solar\a3\TelaCadastro$3.class
 sjt\solar\a3\eventos\DadosCadastrais.class
 sjt\solar\a3\eventos\EditarEvento$2.class
 sjt\solar\a3\eventos\EditarEvento.class

@@ -2,15 +2,12 @@
 
 package sjt.solar.a3;
 
-import java.io.Serializable;
-
-public class Usuario implements Serializable {
+public class Usuario {
     private int id;
     private String nome;
     private String email;
     private String senha;
 
-    //Método construtore
     public Usuario(int id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;
@@ -23,6 +20,7 @@ public class Usuario implements Serializable {
     }
 
     // Getters e Setters
+
     public int getId() {
         return id;
     }

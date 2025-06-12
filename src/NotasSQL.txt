@@ -1,0 +1,40 @@
+
+
+-- Caso precise da criação do banco de dados --
+CREATE DATABASE IF NOT EXISTS solar_bd;
+USE solar_bd;
+
+-- Tabela usuario --
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(45) NOT NULL UNIQUE,
+    senha VARCHAR(45) NOT NULL
+);
+
+-- Tabela eventos --
+CREATE TABLE eventos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nomeEvento VARCHAR(100) NOT NULL,
+    nomeLista VARCHAR(100),
+    descricao TEXT,
+    data DATE,
+    horario TIME,
+    local VARCHAR(100),
+    idUsuario INT NOT NULL,
+    dataCriacao DATETIME,
+    dataAlteracao DATETIME,
+    FOREIGN KEY (idUsuario) REFERENCES usuario(id)
+);
+
+
+-- Se necessário para identificar a base de dados, use:
+USE Solar_bd ;
+
+-- Para mostrar a tabela: 
+SELECT * FROM eventos;
+SELECT * FROM usuario;
+
+-- Para resetar/apagar a tabela:
+TRUNCATE TABLE eventos;
+TRUNCATE TABLE usuario;
